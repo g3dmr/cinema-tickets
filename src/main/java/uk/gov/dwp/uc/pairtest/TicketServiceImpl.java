@@ -48,7 +48,7 @@ public class TicketServiceImpl implements TicketService {
      * @param accountId the account ID to validate
      */
 
-    private void validateAccountIdIsValid(Long accountId) {
+    private void validateAccountId(Long accountId) {
         if (accountId == null || accountId < 1) {
             throw new InvalidPurchaseException("Please provide a valid account id");
         }
@@ -96,7 +96,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void purchaseTickets(Long accountId, TicketTypeRequest... ticketTypeRequests) throws InvalidPurchaseException {
-        validateAccountIdIsValid(accountId);
+        validateAccountId(accountId);
         if (ticketTypeRequests == null) {
             throw new InvalidPurchaseException(EMPTY_REQUEST_WARNING);
         }
