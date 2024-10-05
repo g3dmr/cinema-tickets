@@ -55,19 +55,6 @@ public class TicketServiceImpl implements TicketService {
     }
 
     /**
-     * Validates if the ticket type requests are not null.
-     * Throws InvalidPurchaseException if the ticket type requests are null.
-     *
-     * @param ticketTypeRequests the ticket type requests to validate
-     */
-
-    private void validateTicketTypeRequestIsNotNull(TicketTypeRequest... ticketTypeRequests) {
-        if (ticketTypeRequests == null) {
-            throw new InvalidPurchaseException(EMPTY_REQUEST_WARNING);
-        }
-    }
-
-    /**
      * Ensures that there is at least one adult in the ticket type requests.
      * Throws InvalidPurchaseException if no adult is present.
      *
@@ -110,7 +97,9 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void purchaseTickets(Long accountId, TicketTypeRequest... ticketTypeRequests) throws InvalidPurchaseException {
         validateAccountIdIsValid(accountId);
-        validateTicketTypeRequestIsNotNull(ticketTypeRequests);
+        if (ticketTypeRequests == null) {
+            throw new InvalidPurchaseException(EMPTY_REQUEST_WARNING);
+        }
 
         PurchaseRequest purchaseRequest = createPurchaseRequest(ticketTypeRequests);
 
@@ -137,7 +126,9 @@ public class TicketServiceImpl implements TicketService {
         // Also checking if there is at-least one Adult in the request.
 
         for (TicketTypeRequest ticketTypeRequest : ticketTypeRequests) {
-            validateTicketTypeRequestIsNotNull(ticketTypeRequest);
+            if (ticketTypeRequest == null) {
+                throw new InvalidPurchaseException(EMPTY_REQUEST_WARNING);
+            }
 
             if (ticketTypeRequest.getTicketType() == TicketTypeRequest.Type.ADULT) {
                 hasAdult = true;
