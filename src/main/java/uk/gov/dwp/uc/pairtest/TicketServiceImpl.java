@@ -8,6 +8,15 @@ import uk.gov.dwp.uc.pairtest.exception.InvalidPurchaseException;
 
 import java.util.function.Function;
 
+/**
+ * - There are 3 types of tickets i.e. Infant, Child, and Adult.
+ * - The ticket prices are based on the type of ticket (see table below).
+ * - The ticket purchaser declares how many and what type of tickets they want to buy.
+ * - Multiple tickets can be purchased at any given time.
+ * - Only a maximum of 25 tickets that can be purchased at a time.
+ * - Infants do not pay for a ticket and are not allocated a seat. They will be sitting on an Adult's lap.
+ * - Child and Infant tickets cannot be purchased without purchasing an Adult ticket.
+ */
 public class TicketServiceImpl implements TicketService {
 
     private static final int ADULT_TICKET_PRICE = 25;
@@ -19,13 +28,14 @@ public class TicketServiceImpl implements TicketService {
     private final SeatReservationService seatReservationService;
     private final TicketPaymentService ticketPaymentService;
 
+    // Added this constructor for the unit test
     public TicketServiceImpl(SeatReservationService seatReservationService, TicketPaymentService ticketPaymentService) {
         this.seatReservationService = seatReservationService;
         this.ticketPaymentService = ticketPaymentService;
     }
 
     /**
-     * Function to get the price of a ticket based on its type.
+     * Get the price of a ticket based on its type.
      * Returns the price for ADULT, CHILD, and INFANT ticket types.
      */
 
@@ -97,6 +107,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void purchaseTickets(Long accountId, TicketTypeRequest... ticketTypeRequests) throws InvalidPurchaseException {
         validateAccountId(accountId);
+
         if (ticketTypeRequests == null) {
             throw new InvalidPurchaseException(EMPTY_REQUEST_WARNING);
         }
@@ -120,6 +131,7 @@ public class TicketServiceImpl implements TicketService {
         boolean hasAdult = false;
         int totalNoOfTicketsToPurchase = 0;
         int totalAmountToPay = 0;
+        int totalNoOfTicketsWithInfant = 0;
 
         // Iterating over the ticketTypeRequests to calculate the total amount to pay and
         // total no of tickets in the request.
@@ -134,18 +146,19 @@ public class TicketServiceImpl implements TicketService {
                 hasAdult = true;
             }
 
+            totalNoOfTicketsWithInfant += ticketTypeRequest.getNoOfTickets();
+
             if (ticketTypeRequest.getTicketType() != TicketTypeRequest.Type.INFANT) {
                 totalNoOfTicketsToPurchase += ticketTypeRequest.getNoOfTickets();
                 totalAmountToPay += GET_TICKET_PRICE.apply(ticketTypeRequest) * ticketTypeRequest.getNoOfTickets();
             }
-
         }
 
         // Validation is done here to optimise the code,
         // so that we are not making multiple iterations over the same data.
         acceptOnlyIfAdultIsPresent(hasAdult);
 
-        acceptOnlyIfTicketCountIsResonable(totalNoOfTicketsToPurchase);
+        acceptOnlyIfTicketCountIsResonable(totalNoOfTicketsWithInfant);
 
         return new PurchaseRequest(totalNoOfTicketsToPurchase, totalAmountToPay);
     }

@@ -69,6 +69,16 @@ public class TicketServiceImplWarningMessagesTest {
         validateException(1L, MAX_TICKET_WARNING, ticketTypeRequests);
     }
 
+    public void testWarningForMaxTicketWithInfantCategories() {
+        TicketTypeRequest[] ticketTypeRequests ={
+                new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 20),
+                new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 3),
+                new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 4)
+
+        };
+        validateException(1L, MAX_TICKET_WARNING, ticketTypeRequests);
+    }
+
     @Test
     public void testWarningForEmptyTicketType() {
         validateException(1L, EMPTY_REQUEST_WARNING, null);
