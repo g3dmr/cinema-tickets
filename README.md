@@ -1,11 +1,11 @@
 # Cinema Ticket
 
 This project is a ticket purchasing service that validates and processes ticket purchase requests.
-It ensures that the requests meet certain criteria before proceeding with seat reservations and payment processing.
+It ensures that the requests meet given criteria before proceeding with seat reservations and payment processing.
 
 ## Installation
 
-To install and run this project, you need to have Java and Maven installed on your machine.
+To install and run this project, you need to have Java 11 (and above) and Maven installed on your machine.
 
 1. Clone the repository:
     ```sh
@@ -17,8 +17,3 @@ To install and run this project, you need to have Java and Maven installed on yo
     ```sh
     mvn clean install
     ```
-
-## Usage
-
-To use the `TicketServiceImpl` class, you need to create instances of `SeatReservationService` and `TicketPaymentService`,
-and then call the `purchaseTickets` method with the appropriate parameters.
