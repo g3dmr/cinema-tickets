@@ -34,61 +34,6 @@ public class TicketServiceImpl implements TicketService {
         this.ticketPaymentService = ticketPaymentService;
     }
 
-    /**
-     * Get the price of a ticket based on its type.
-     * Returns the price for ADULT, CHILD, and INFANT ticket types.
-     */
-
-    private static final Function<TicketTypeRequest, Integer> GET_TICKET_PRICE = ticketTypeRequest -> {
-        switch (ticketTypeRequest.getTicketType()) {
-            case ADULT:
-                return ADULT_TICKET_PRICE;
-            case CHILD:
-                return CHILD_TICKET_PRICE;
-            case INFANT:
-            default:
-                return INFANT_TICKET_PRICE;
-        }
-    };
-
-    /**
-     * Validates if the account ID is valid.
-     * Throws InvalidPurchaseException if the account ID is null or less than 1.
-     *
-     * @param accountId the account ID to validate
-     */
-
-    private void validateAccountId(Long accountId) {
-        if (accountId == null || accountId < 1) {
-            throw new InvalidPurchaseException("Please provide a valid account id");
-        }
-    }
-
-    /**
-     * Ensures that there is at least one adult in the ticket type requests.
-     * Throws InvalidPurchaseException if no adult is present.
-     *
-     * @param hasAdult boolean indicating if there is at least one adult
-     */
-
-    private void acceptOnlyIfAdultIsPresent(boolean hasAdult) {
-        if (!hasAdult) {
-            throw new InvalidPurchaseException("There should be at-least one Adult");
-        }
-    }
-
-    /**
-     * Validates if the total number of tickets to purchase is reasonable.
-     * Throws InvalidPurchaseException if the number of tickets is not between 1 and 25.
-     *
-     * @param totalNoOfTicketsToPurchase the total number of tickets to purchase
-     */
-
-    private void acceptOnlyIfTicketCountIsResonable(int totalNoOfTicketsToPurchase) {
-        if (totalNoOfTicketsToPurchase > 25 || totalNoOfTicketsToPurchase < 1) {
-            throw new InvalidPurchaseException("Number of tickets must be between 1 and 25 for a single transaction");
-        }
-    }
 
     /**
      * Should only have private methods other than the one below.
@@ -162,4 +107,61 @@ public class TicketServiceImpl implements TicketService {
 
         return new PurchaseRequest(totalNoOfTicketsToPurchase, totalAmountToPay);
     }
+
+
+    /**
+     * Validates if the account ID is valid.
+     * Throws InvalidPurchaseException if the account ID is null or less than 1.
+     *
+     * @param accountId the account ID to validate
+     */
+
+    private void validateAccountId(Long accountId) {
+        if (accountId == null || accountId < 1) {
+            throw new InvalidPurchaseException("Please provide a valid account id");
+        }
+    }
+
+    /**
+     * Ensures that there is at least one adult in the ticket type requests.
+     * Throws InvalidPurchaseException if no adult is present.
+     *
+     * @param hasAdult boolean indicating if there is at least one adult
+     */
+
+    private void acceptOnlyIfAdultIsPresent(boolean hasAdult) {
+        if (!hasAdult) {
+            throw new InvalidPurchaseException("There should be at-least one Adult");
+        }
+    }
+
+    /**
+     * Validates if the total number of tickets to purchase is reasonable.
+     * Throws InvalidPurchaseException if the number of tickets is not between 1 and 25.
+     *
+     * @param totalNoOfTicketsToPurchase the total number of tickets to purchase
+     */
+
+    private void acceptOnlyIfTicketCountIsResonable(int totalNoOfTicketsToPurchase) {
+        if (totalNoOfTicketsToPurchase > 25 || totalNoOfTicketsToPurchase < 1) {
+            throw new InvalidPurchaseException("Number of tickets must be between 1 and 25 for a single transaction");
+        }
+    }
+
+    /**
+     * Get the price of a ticket based on its type.
+     * Returns the price for ADULT, CHILD, and INFANT ticket types.
+     */
+
+    private static final Function<TicketTypeRequest, Integer> GET_TICKET_PRICE = ticketTypeRequest -> {
+        switch (ticketTypeRequest.getTicketType()) {
+            case ADULT:
+                return ADULT_TICKET_PRICE;
+            case CHILD:
+                return CHILD_TICKET_PRICE;
+            case INFANT:
+            default:
+                return INFANT_TICKET_PRICE;
+        }
+    };
 }
