@@ -14,7 +14,7 @@ public class TicketServiceImpl implements TicketService {
     private static final int CHILD_TICKET_PRICE = 15;
     private static final int INFANT_TICKET_PRICE = 0;
 
-    private static final String EMPTY_REQUEST_WARNING = "TicketTypeRequests cannot be null";
+    private static final String EMPTY_REQUEST_WARNING = "Ticket requests cannot be null";
 
     private final SeatReservationService seatReservationService;
     private final TicketPaymentService ticketPaymentService;

@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TicketServiceImplWarningMessagesTest {
 
     private static final String NO_ADULT_WARNING = "There should be at-least one Adult";
-    private static final String EMPTY_REQUEST_WARNING = "TicketTypeRequests cannot be null";
+    private static final String EMPTY_REQUEST_WARNING = "Ticket requests cannot be null";
     private static final String VALID_ACCOUNT_ID_WARNING = "Please provide a valid account id";
     private static final String MAX_TICKET_WARNING = "Number of tickets must be between 1 and 25 for a single transaction";
 
