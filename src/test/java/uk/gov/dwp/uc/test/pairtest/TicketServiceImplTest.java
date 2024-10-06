@@ -56,7 +56,7 @@ public class TicketServiceImplTest {
         ticketService.purchaseTickets(1L, ticketTypeRequests);
         // Then
         verify(seatReservationService, times(1)).reserveSeat(1L, 2);
-        verify(payments, times(1)).makePayment(1L, 35);
+        verify(payments, times(1)).makePayment(1L, 40);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class TicketServiceImplTest {
         ticketService.purchaseTickets(1L, ticketTypeRequests);
         // Then
         verify(seatReservationService, times(1)).reserveSeat(1L, 2);
-        verify(payments, times(1)).makePayment(1L, 35);
+        verify(payments, times(1)).makePayment(1L, 40);
     }
 
     @Test
@@ -100,7 +100,7 @@ public class TicketServiceImplTest {
         ticketService.purchaseTickets(1L, ticketTypeRequests);
         // Then
         verify(seatReservationService, times(1)).reserveSeat(1L, 10);
-        verify(payments, times(1)).makePayment(1L, 175);
+        verify(payments, times(1)).makePayment(1L, 200);
     }
 
     @Test
@@ -115,6 +115,6 @@ public class TicketServiceImplTest {
         ticketService.purchaseTickets(1L, ticketTypeRequests);
         // Then
         verify(seatReservationService, times(1)).reserveSeat(1L, 20);
-        verify(payments, times(1)).makePayment(1L, 350);
+        verify(payments, times(1)).makePayment(1L, 400);
     }
 }

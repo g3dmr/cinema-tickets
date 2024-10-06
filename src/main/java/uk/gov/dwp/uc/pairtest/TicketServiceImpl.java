@@ -11,7 +11,7 @@ import java.util.function.Function;
 public class TicketServiceImpl implements TicketService {
 
     private static final int ADULT_TICKET_PRICE = 25;
-    private static final int CHILD_TICKET_PRICE = 10;
+    private static final int CHILD_TICKET_PRICE = 15;
     private static final int INFANT_TICKET_PRICE = 0;
 
     private static final String EMPTY_REQUEST_WARNING = "TicketTypeRequests cannot be null";
